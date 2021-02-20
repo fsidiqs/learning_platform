@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+
+import { Route, Switch } from 'react-router-dom';
+import CourseContent from './containers/CourseContent/CourseContent';
+import CourseList from './containers/CourseList/CourseList';
+import Auth from './containers/Auth/Auth'
+import Logout from './containers/Auth/Logout/Logout'
+import Layout from './Layout/Layout';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   return (
+      <div>
+         <Layout>
+            <Switch>
+               <Route path="/" exact component={CourseList} />
+               <Route path="/courses/:course_id" component={CourseContent} />
+               <Route path="/auth" component={Auth} />
+               <Route path="/logout" component={Logout} />
+
+            </Switch>
+         </Layout>
+      </div>
+   );
 }
 
 export default App;
