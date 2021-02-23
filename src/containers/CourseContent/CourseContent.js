@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import './CourseContent.css';
 
+import LoginNavbar from '../../components/Navigation/LoginNavbar/LoginNavbar';
 import Description from '../../components/CourseContent/Description/Description';
 import Sidebar from '../../components/CourseContent/Description/Sidebar/Sidebar';
 import ReactPlayer from 'react-player';
@@ -91,8 +92,7 @@ const CourseContent = (props) => {
    const [selectedLecture, setSelectedLecture] = React.useState(0);
 
    const onToggleSidebar = () => {
-      
-      setShowSidebar(prevState=> !prevState);
+      setShowSidebar((prevState) => !prevState);
    };
 
    const onSelectedLecture = (index) => {
@@ -100,7 +100,9 @@ const CourseContent = (props) => {
    };
 
    return (
-      <div>
+      <React.Fragment>
+         <LoginNavbar />
+
          <div className="layout content">
             {
                <Sidebar
@@ -125,7 +127,7 @@ const CourseContent = (props) => {
                />
             </div>
          </div>
-      </div>
+      </React.Fragment>
    );
 };
 export default CourseContent;

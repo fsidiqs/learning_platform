@@ -1,21 +1,24 @@
-.navbar{
-    margin:5px;
+.navbar {
+   margin: 5px;
 }
 
 .flex-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    justify-items: start;
-    
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   align-items: center;
+   justify-items: start;
 }
 
 .search {
-    display: flex;
-    width: 100%;
+   display: flex;
+   align-items: center;
+   width: 100%;
+}
+
+.search-icon {
+   justify-self: center;
 }
 
 .nav-items {
-    justify-self: end;
+   justify-self: end;
 }
-

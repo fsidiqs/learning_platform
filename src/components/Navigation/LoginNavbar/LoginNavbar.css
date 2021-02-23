@@ -1,0 +1,25 @@
+.navbar {
+    margin: 5px;
+ }
+ 
+ .flex-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: start;
+ }
+ 
+ .search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+ }
+ 
+ .search-icon {
+    justify-self: center;
+ }
+ 
+ .nav-items {
+    justify-self: end;
+ }
+ 

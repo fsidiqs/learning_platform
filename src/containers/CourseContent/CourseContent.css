@@ -47,6 +47,13 @@ a {
    padding: 0;
 }
 
+.main {
+   display:flex;
+   flex-flow: column;
+   align-items: center;
+}
+
+
 /* Make the navigation 100% width on phones */
 .nav {
    width: 100%;

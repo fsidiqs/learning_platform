@@ -28,6 +28,7 @@ const Sidebar = (props) => {
             color="default"
             endIcon={<NavigateBeforeIcon />}
             onClick={props.sidebarToggle}
+         
          >
             Hide Sidebar
          </Button>

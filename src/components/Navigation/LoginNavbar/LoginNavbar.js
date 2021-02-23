@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 import SearchIcon from '@material-ui/icons/Search';
 
-import './HomeNavbar.css';
+import './LoginNavbar.css';
 
 const HomeNavbar = (props) => {
    return (
@@ -20,26 +20,7 @@ const HomeNavbar = (props) => {
                   <HomeIcon />
                </NavLink>
             </IconButton>
-            <div className="search">
-               <TextField
-                  variant="outlined"
-                  fullWidth
-                  placeholder="search course"
-                  size="small"
-               />
-               <SearchIcon className="search-icon" />
-            </div>
-            <div className="nav-items">
-               {props.isAuthenticated ? (
-                  <NavLink to="/logout">
-                     <Button color="inherit">logout</Button>
-                  </NavLink>
-               ) : (
-                  <NavLink to="/auth">
-                     <Button color="inherit">auth</Button>
-                  </NavLink>
-               )}
-            </div>
+           
          </div>
       </AppBar>
    );
