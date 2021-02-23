@@ -112,7 +112,7 @@ const CourseContent = (props) => {
                />
             }
             <div className="main">
-               <div class="content">
+               <div className="content">
                   <ReactPlayer
                      url={courseLectures[selectedLecture].url}
                      width="1080px"

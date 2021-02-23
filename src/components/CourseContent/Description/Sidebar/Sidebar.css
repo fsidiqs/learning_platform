@@ -2,6 +2,8 @@
    padding: 0.9em 1em;
    border-bottom: 1px solid #ddd;
    border-left: 6px solid transparent;
+   color:white;
+   cursor: pointer;
 }
 .avatar {
    border-radius: 3px;
@@ -21,10 +23,11 @@
 }
 
 .item-selected {
+   /* color:white; */
    background: #eee;
+   border-left: 6px solid .1b98f8;
 }
 .item-unread {
-   border-left: 6px solid .1b98f8;
 }
 
 .sidebar {

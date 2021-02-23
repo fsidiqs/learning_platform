@@ -1,0 +1,21 @@
+.navbar{
+    margin:5px;
+}
+
+.flex-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: start;
+    
+}
+
+.search {
+    display: flex;
+    width: 100%;
+}
+
+.nav-items {
+    justify-self: end;
+}
+

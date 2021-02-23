@@ -1,9 +1,6 @@
+import React from 'react';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
@@ -11,30 +8,29 @@ import './Sidebar.css';
 
 const Sidebar = (props) => {
    const listItems = props.lectures.map((lecture, index) => (
-      <ListItem
-         className="lecture-item"
+      <List
          onClick={() => {
             props.clicked(index);
          }}
+         className="item"
          key={index}
       >
-         <ListItemText
-            primary={`${index + 1}. ${lecture.title}`}
-            secondary={lecture.duration}
-         />
-         <Divider />
-      </ListItem>
+         <h4>{`${index + 1}. ${lecture.title}`}</h4>
+         <span>{lecture.duration}</span>
+        
+      </List>
    ));
 
    const sidebar = props.sidebar ? (
       <div className="sidebar">
-         <IconButton
-            color="secondary"
-            aria-label="add"
+         <Button
+            variant="outlined"
+            color="default"
+            endIcon={<NavigateBeforeIcon />}
             onClick={props.sidebarToggle}
          >
-            <NavigateBeforeIcon />
-         </IconButton>
+            Hide Sidebar
+         </Button>
          <div id="list" className="pure-u-1">
             {listItems}
          </div>

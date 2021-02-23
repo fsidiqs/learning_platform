@@ -1,34 +1,45 @@
 import { withRouter } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Course.css';
 
 const Course = (props) => {
+   const rating = (
+      <div>
+         <FontAwesomeIcon style={{ color: '#f4c150' }} icon={faStar} />
+         <FontAwesomeIcon style={{ color: '#f4c150' }} icon={faStar} />
+         <FontAwesomeIcon style={{ color: '#f4c150' }} icon={faStarHalfAlt} />
+         <FontAwesomeIcon style={{ color: 'dedfe0' }} icon={faStar} />
+         <FontAwesomeIcon style={{ color: 'dedfe0' }} icon={faStar} />
+      </div>
+   );
+
+   const renderPrice = () => {
+      let str = '200';
+      return str.slice(0, str.length - 2) + '.' + str.slice(str.length - 2);
+   };
+
    return (
-      <Card onClick={props.clicked}>
-         <div className="thumbnail" >
-            <img
-               className="thumbnail-image"
-               src="http://unsplash.it/250/150?gravity=center"
-               alt="course-thumbnail"
-            />
+      <div
+         className="course-card"
+         onClick={() => props.clicked(props.course.id)}
+      >
+         <div>
+            <img style={{ width: '100%' }} src={props.course.picture} />
          </div>
-         <CardContent>
-            <div className="course-bottom-section">
-               {/* <a href="#">
-             <img className="channel"
-            </a> */}
-               <div className="course-details">
-                  <span className="course-title">Course Title</span>
-                  {/* <a href="#" className="course-channel-name">Channel  Name</a> */}
-                  <div className="course-metadata">
-                     <span>12:00</span>
-                  </div>
-               </div>
+         <div className="index-card-text">
+            <div className="index-card-title">{props.course.title}</div>
+            <div className="index-card-rating">
+               <span className="index-rating-span">{rating}</span>
+               <span className="index-rating-span">{props.course.rating}</span>
+               <span className="index-rating-span" style={{ color: '#686f7a' }}>
+                  ({props.course.rating_count})
+               </span>
             </div>
-         </CardContent>
-      </Card>
+            <div className="index-card-price">${renderPrice()}</div>
+         </div>
+      </div>
    );
 };
 

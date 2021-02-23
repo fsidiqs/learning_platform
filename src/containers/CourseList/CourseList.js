@@ -6,7 +6,7 @@ import Course from '../../components/Course/Course';
 const CourseList = (props) => {
    const onCourseClickHandler = () => {
       if (props.isAuthenticated) {
-         props.history.push('/courses/1');
+         props.history.push('/course-overview/1');
       } else if (!props.isAuthenticated) {
          console.log(props.isAuthenticated);
          props.history.push('/auth');
