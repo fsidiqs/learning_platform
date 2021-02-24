@@ -48,14 +48,15 @@ export const auth = (email, password, isSignup) => {
          password: password,
          returnSecureToken: true,
       };
-      var tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
+      var expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 1);
+      const tempExpiresIn = expirationDate.getTime() - (new Date).getTime()
 
       // add a day
       const signupResp = {
          data: {
             idToken: 'test',
-            expiresIn: tomorrow,
+            expiresIn: tempExpiresIn,
             localId: 'testid',
          },
       };
@@ -75,14 +76,13 @@ export const auth = (email, password, isSignup) => {
          //    new Date().getTime() + signupResp.data.expiresIn * 1000
          // );
          localStorage.setItem('token', signupResp.data.idToken);
-         localStorage.setItem('expirationDate', signupResp.data.expiresIn);
+         localStorage.setItem('expirationDate', expirationDate);
          localStorage.setItem('userId', signupResp.data.localId);
-         console.log(signupResp.data.expiresIn);
          dispatch(
             authSuccess(signupResp.data.idToken, signupResp.data.localId)
          );
-
-         // dispatch(checkAuthTimeout(signupResp.data.expiresIn));
+         
+         dispatch(checkAuthTimeout(signupResp.data.expiresIn));
       } catch (err) {
          dispatch(authFail(err.response.data.error));
       }

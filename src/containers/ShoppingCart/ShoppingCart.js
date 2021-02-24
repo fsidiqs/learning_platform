@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import { withRouter } from 'react-router-dom';
 
 import HomeNavbar from '../../components/Navigation/HomeNavbar/HomeNavbar';
+import CartItem from '../../components/CartItem/CartItem';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import {
-   faStar,
-   faStarHalfAlt,
-   faPlayCircle,
-   faComment,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as actions from '../../store/actions/index';
 
-import './CourseOverview.css';
-
-const CourseOverview = (props) => {
-   const { course_id } = useParams();
+const ShoppingCart = (props) => {
    const [courses, setCourses] = useState([
       {
          id: 1,
@@ -61,117 +52,68 @@ const CourseOverview = (props) => {
       },
    ]);
 
-   const [course, setCourse] = useState(null);
+   const [cartItems, setCartItems] = useState([]);
+
+   const { onRemoveCartItem, onShoppingCartInit, shoppingCart } = props;
 
    useEffect(() => {
-      setCourse({ ...courses.find((course) => course.id === +course_id) });
-   }, [course_id, courses]);
+      onShoppingCartInit();
+   }, [onShoppingCartInit]);
 
-   const onAddToCartHandler = (itemID) => {
-      props.onAddToCart(itemID);
+   useEffect(() => {
+      const updatedCartItems = shoppingCart.map((cartItem) =>
+         courses.find((course) => course.id === cartItem)
+      );
+
+      setCartItems(updatedCartItems);
+   }, [shoppingCart, courses]);
+
+   const onCourseClickHandler = (id) => {
+      props.history.push(`/course-overview/${id}`);
    };
+   const cartItemsCmp = cartItems.map((course) => (
+      <CartItem course={course} clicked={onCourseClickHandler} key={course.id} removed={onRemoveCartItem}/>
+   ));
 
-   const renderOverview = () => {
-      let overview = <Spinner />;
-      if (course) {
-         overview = (
-            <div className="heading-box">
-               <div>
-                  <div className="course-overview-title">{course.title}</div>
-                  <div className="course-overview-subtitle">
-                     {course.subtitle}
-                  </div>
-                  <div className="index-card-rating-feed">
-                     <span className="index-rating-span">
-                        <div>
-                           <FontAwesomeIcon
-                              style={{ padding: '3px', color: '#f4c150' }}
-                              icon={faStar}
-                           />
-                           <FontAwesomeIcon
-                              style={{ padding: '3px', color: '#f4c150' }}
-                              icon={faStar}
-                           />
-                           <FontAwesomeIcon
-                              style={{ padding: '3px', color: '#f4c150' }}
-                              icon={faStar}
-                           />
-                           <FontAwesomeIcon
-                              style={{ padding: '3px', color: '#f4c150' }}
-                              icon={faStarHalfAlt}
-                           />
-                           <FontAwesomeIcon
-                              style={{ padding: '3px', color: 'dedfe0' }}
-                              icon={faStar}
-                           />
-                        </div>
-                     </span>
-                     <span className="index-rating-span">{course.rating}</span>
-                     <span className="index-rating-span">
-                        ({course.rating_count} ratings)
-                     </span>
-                     <span className="index-rating-span">
-                        {course.student_count} students enrolled
-                     </span>
-                  </div>
-                  <div>
-                     <span style={{ paddingRight: '32px', fontSize: '15px' }}>
-                        Created by {course.teacher}
-                     </span>
-                     <FontAwesomeIcon
-                        style={{ color: '#fff' }}
-                        icon={faComment}
-                     />
-                     {course.languages}
-                  </div>
+
+   const renderContent = () => {
+      let content = <Spinner />;
+      if (cartItems.length > 0) {
+         content = (
+            <div className="index">
+               <div className="index-header-container">
+                  <div className="index-header">Cart Items</div>
                </div>
-               <div className="course-feed-img-box">
-                  <div
-                     className="img-play-box"
-                     //    onClick={this.videoOpenHandle}
-                  >
-                     <img style={{ maxWidth: '335px' }} src={course.picture} alt="course-picture"/>
-                     <div className="play-circle">
-                        <FontAwesomeIcon
-                           icon={faPlayCircle}
-                           className="play-circle-icon"
-                        />
-                     </div>
-                  </div>
-                  <div style={{ textAlign: 'center' }}>${course.price}</div>
-                  <button
-                     className="back-home-button"
-                     onClick={() => {
-                        onAddToCartHandler(course.id);
-                     }}
-                  >
-                     Add To Cart
-                  </button>
-               </div>
+               <div className="courses-box">{cartItemsCmp}</div>
             </div>
          );
       }
-      return overview;
+      return content;
    };
+
    return (
-      <React.Fragment>
+      <div>
          <HomeNavbar />
-         {renderOverview()}
-      </React.Fragment>
+         {renderContent()}
+      </div>
    );
 };
 
 const mapStateToProps = (state) => {
    return {
       isAuthenticated: state.auth.token !== null,
+      shoppingCart: state.shoppingCart.items,
    };
 };
 
 const mapDispatchToProps = (dispatch) => {
    return {
-      onAddToCart: (itemID) => dispatch(actions.addShoppingCartItem(itemID)),
+      onShoppingCartInit: () => dispatch(actions.shoppingCartInit()),
+      onRemoveCartItem: (itemID) => dispatch(actions.removeShoppingCartItem(itemID)),
    };
 };
-export default withRouter(
-   connect(mapStateToProps, mapDispatchToProps)(CourseOverview)
-);
+
+export default connect(
+   mapStateToProps,
+   mapDispatchToProps
+)(withRouter(ShoppingCart));

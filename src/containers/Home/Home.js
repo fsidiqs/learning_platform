@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import * as actions from '../../store/actions/index';
 
 import HomeNavbar from '../../components/Navigation/HomeNavbar/HomeNavbar';
 import Course from '../../components/Course/Course';
 import './Home.css';
 
 const Home = (props) => {
+   const { onShoppingCartInit } = props;
    const [courses, setCourses] = useState([
       {
          id: 1,
@@ -53,6 +55,11 @@ const Home = (props) => {
    const onCourseClickHandler = (id) => {
       props.history.push(`/course-overview/${id}`);
    };
+
+   useEffect(() => {
+      onShoppingCartInit();
+   }, [onShoppingCartInit]);
+
    return (
       <div>
          <HomeNavbar />
@@ -83,7 +90,14 @@ const Home = (props) => {
 const mapStateToProps = (state) => {
    return {
       isAuthenticated: state.auth.token !== null,
+      shoppingCart: state.shoppingCart.items,
    };
 };
 
-export default connect(mapStateToProps)(withRouter(Home));
+const mapDispatchToProps = (dispatch) => {
+   return {
+      onShoppingCartInit: () => dispatch(actions.shoppingCartInit()),
+   };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Home));

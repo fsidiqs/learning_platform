@@ -21,4 +21,14 @@
 
 .nav-items {
    justify-self: end;
+   align-self: center;
+   margin: 5px;
+}
+
+.nav-items > * {
+   padding: 10px;
+}
+
+.shopping-cart-icon {
+   position: relative;
 }

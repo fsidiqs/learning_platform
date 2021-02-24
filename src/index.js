@@ -9,12 +9,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import authReducer from './store/reducers/auth';
+import shoppingCartReducer from './store/reducers/shoppingCart';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-
 const rootReducer = combineReducers({
    auth: authReducer,
+   shoppingCart: shoppingCartReducer,
 });
 
 const store = createStore(

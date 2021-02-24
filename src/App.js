@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import CourseContent from './containers/CourseContent/CourseContent';
 import CourseOverview from './containers/CourseOverview/CourseOverview';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
-
 import Home from './containers/Home/Home';
+import ShoppingCart from './containers/ShoppingCart/ShoppingCart'
 
-function App() {
+import * as actions from './store/actions/index';
+
+const App = (props) => {
+   const { onTryAutoSignup } = props;
+
+   useEffect(() => {
+      onTryAutoSignup();
+   }, [onTryAutoSignup]);
+
    return (
       <div>
          <Switch>
             <Route path="/" exact component={Home} />
+            <Route path="/cart" component={ShoppingCart}/>
             <Route
                path="/course-overview/:course_id"
                component={CourseOverview}
@@ -23,6 +34,18 @@ function App() {
          </Switch>
       </div>
    );
-}
+};
 
-export default App;
+const mapStateToProps = (state) => {
+   return {
+      isAuthenticated: state.auth.token !== null,
+   };
+};
+
+const mapDispatchToProps = (dispatch) => {
+   return {
+      onTryAutoSignup: () => dispatch(actions.authCheckState()),
+   };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
