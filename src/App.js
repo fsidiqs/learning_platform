@@ -8,7 +8,8 @@ import CourseOverview from './containers/CourseOverview/CourseOverview';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import Home from './containers/Home/Home';
-import ShoppingCart from './containers/ShoppingCart/ShoppingCart'
+import ShoppingCart from './containers/ShoppingCart/ShoppingCart';
+import PurchasedCourse from './containers/PurchasedCourse/PurhcasedCourse';
 
 import * as actions from './store/actions/index';
 
@@ -23,11 +24,12 @@ const App = (props) => {
       <div>
          <Switch>
             <Route path="/" exact component={Home} />
-            <Route path="/cart" component={ShoppingCart}/>
+            <Route path="/cart" component={ShoppingCart} />
             <Route
                path="/course-overview/:course_id"
                component={CourseOverview}
             />
+            <Route path="/purchased-courses/" component={PurchasedCourse} />
             <Route path="/courses/:course_id" component={CourseContent} />
             <Route path="/auth" component={Auth} />
             <Route path="/logout" component={Logout} />

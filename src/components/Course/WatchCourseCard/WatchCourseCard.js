@@ -2,7 +2,7 @@ import { withRouter } from 'react-router-dom';
 import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import './Course.css';
+import './WatchCourseCard.css';
 
 const Course = (props) => {
    const rating = (

@@ -1,109 +1,76 @@
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import HomeNavbar from '../../components/Navigation/HomeNavbar/HomeNavbar';
-import CartItem from '../../components/CartItem/CartItem';
-import Spinner from '../../components/UI/Spinner/Spinner';
+import WatchCourseCard from '../../components/Course/WatchCourseCard/WatchCourseCard';
 import * as actions from '../../store/actions/index';
 
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-
-import { renderPrice } from '../../utils/utils';
 import CourseData from '../../coursedata';
 
-import './ShoppingCart.css';
+import './PurchasedCourse.css';
 
-const ShoppingCart = (props) => {
+const PurchasedCourse = (props) => {
+   const {
+      onShoppingCartInit,
+      shoppingCart,
+      onPurchasedCourseInit,
+      purchasedCourseIDArr,
+   } = props;
+
    const [courses, setCourses] = useState(CourseData);
 
    const [cartItems, setCartItems] = useState([]);
-
-   const { onRemoveCartItem, onShoppingCartInit, shoppingCart } = props;
+   const [purchasedCourses, setPurchasedCourses] = useState([]);
 
    useEffect(() => {
       onShoppingCartInit();
-   }, [onShoppingCartInit]);
+      onPurchasedCourseInit();
+   }, [onShoppingCartInit, onPurchasedCourseInit]);
 
    useEffect(() => {
       const updatedCartItems = shoppingCart.map((cartItem) =>
          courses.find((course) => course.id === cartItem)
       );
+      const updatedPurchasedCourse = purchasedCourseIDArr.map((courseID) =>
+         courses.find((course) => course.id === courseID)
+      );
 
+      setPurchasedCourses(updatedPurchasedCourse);
       setCartItems(updatedCartItems);
-   }, [shoppingCart, courses]);
+   }, [setPurchasedCourses, shoppingCart, courses, purchasedCourseIDArr]);
 
    const onCourseClickHandler = (id) => {
-      props.history.push(`/course-overview/${id}`);
+      props.history.push(`/courses/${id}`);
    };
-   const cartItemsCmp = cartItems.map((course) => (
-      <CartItem
+   const courseItemCmp = purchasedCourses.map((course) => (
+      <WatchCourseCard
          course={course}
          clicked={onCourseClickHandler}
          key={course.id}
-         removed={onRemoveCartItem}
+         removed={() => {}}
       />
    ));
 
    const renderContent = () => {
-      let content = <Spinner />;
-      if (cartItems.length > 0) {
+      let content = <p>no puchased item</p>;
+      if (purchasedCourses.length > 0) {
          content = (
             <div className="index">
                <div className="index-header-container">
                   <div className="index-header">Cart Items</div>
                </div>
-               <div className="courses-box">{cartItemsCmp}</div>
+               <div className="courses-box">{courseItemCmp}</div>
             </div>
          );
       }
       return content;
    };
 
-   const totalPrice = cartItems.reduce((acc, obj) => {
-      return acc + obj.price;
-   }, 0);
-
-   const checkoutComp =
-      cartItems.length > 0 ? (
-         <div className="checkout-form">
-            <div className="index-header-container">
-               <div className="index-header">Checkout</div>
-            </div>
-            <Card variant="outlined">
-               <CardContent>
-                  <h2 color="textSecondary" gutterBottom>
-                     Total Price
-                  </h2>
-                  <h3>${renderPrice(totalPrice)}</h3>
-               </CardContent>
-               <CardActions>
-                  {props.isAuthenticated ? (
-                     <Button
-                        variant="contained"
-                        size="small"
-                        onClick={onCheckoutHandler}
-                     >
-                        Checkout Now
-                     </Button>
-                  ) : (
-                     <Button variant="contained" size="small">
-                        <Link to="/auth">Login to Checkout</Link>
-                     </Button>
-                  )}
-               </CardActions>
-            </Card>
-         </div>
-      ) : null;
-
    return (
       <div>
          <HomeNavbar />
          {renderContent()}
-         {checkoutComp}
       </div>
    );
 };
@@ -112,20 +79,18 @@ const mapStateToProps = (state) => {
    return {
       isAuthenticated: state.auth.token !== null,
       shoppingCart: state.shoppingCart.items,
+      purchasedCourseIDArr: state.purchasedCourse.items,
    };
 };
 
 const mapDispatchToProps = (dispatch) => {
    return {
       onShoppingCartInit: () => dispatch(actions.shoppingCartInit()),
-      onRemoveCartItem: (itemID) =>
-         dispatch(actions.removeShoppingCartItem(itemID)),
-      onAddPurchasedCourse: (itemIDArr) =>
-         dispatch(actions.addPurchasedCourse(itemIDArr)),
+      onPurchasedCourseInit: () => dispatch(actions.purchasedCourseInit()),
    };
 };
 
 export default connect(
    mapStateToProps,
    mapDispatchToProps
-)(withRouter(ShoppingCart));
+)(withRouter(PurchasedCourse));

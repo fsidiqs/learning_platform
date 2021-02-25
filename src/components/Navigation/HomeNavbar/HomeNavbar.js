@@ -16,7 +16,7 @@ import './HomeNavbar.css';
 
 const HomeNavbar = (props) => {
    return (
-      <AppBar position="relatives" color="default" className="navbar">
+      <AppBar position="relative" color="default" className="navbar">
          <div className="flex-container">
             <NavLink to="/">
                <IconButton color="inherit" aria-label="menu">
@@ -44,9 +44,14 @@ const HomeNavbar = (props) => {
                   </IconButton>
                </NavLink>
                {props.isAuthenticated ? (
-                  <NavLink to="/logout">
-                     <Button color="inherit">logout</Button>
-                  </NavLink>
+                  <React.Fragment>
+                     <NavLink to="/purchased-courses">
+                        <Button color="inherit">my courses</Button>
+                     </NavLink>
+                     <NavLink to="/logout">
+                        <Button color="inherit">logout</Button>
+                     </NavLink>
+                  </React.Fragment>
                ) : (
                   <NavLink to="/auth">
                      <Button color="inherit">auth</Button>
