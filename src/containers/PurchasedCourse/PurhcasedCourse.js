@@ -49,13 +49,7 @@ const ShoppingCart = (props) => {
    ));
 
    const renderContent = () => {
-      let content = (
-         <div className="index">
-            <div className="index-header-container">
-               <div className="index-header">No Item</div>
-            </div>
-         </div>
-      );
+      let content = <Spinner />;
       if (cartItems.length > 0) {
          content = (
             <div className="index">
@@ -72,12 +66,6 @@ const ShoppingCart = (props) => {
    const totalPrice = cartItems.reduce((acc, obj) => {
       return acc + obj.price;
    }, 0);
-
-   const onCheckoutHandler = () => {
-      const cartItemIDArr = cartItems.map((item) => item.id);
-      props.onAddPurchasedcourse(cartItemIDArr);
-      props.onClearCart();
-   };
 
    const checkoutComp =
       cartItems.length > 0 ? (
@@ -132,8 +120,7 @@ const mapDispatchToProps = (dispatch) => {
       onShoppingCartInit: () => dispatch(actions.shoppingCartInit()),
       onRemoveCartItem: (itemID) =>
          dispatch(actions.removeShoppingCartItem(itemID)),
-      onClearCart: () => dispatch(actions.clearShoppingCart()),
-      onAddPurchasedcourse: (itemIDArr) =>
+      onAddPurchasedCourse: (itemIDArr) =>
          dispatch(actions.addPurchasedCourse(itemIDArr)),
    };
 };

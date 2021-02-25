@@ -6,7 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Badge from '@material-ui/core/Badge'
+import Badge from '@material-ui/core/Badge';
 
 import HomeIcon from '@material-ui/icons/Home';
 import SearchIcon from '@material-ui/icons/Search';
@@ -16,13 +16,13 @@ import './HomeNavbar.css';
 
 const HomeNavbar = (props) => {
    return (
-      <AppBar position="static" color="default" className="navbar">
+      <AppBar position="relatives" color="default" className="navbar">
          <div className="flex-container">
-            <IconButton color="inherit" aria-label="menu">
-               <NavLink to="/">
+            <NavLink to="/">
+               <IconButton color="inherit" aria-label="menu">
                   <HomeIcon />
-               </NavLink>
-            </IconButton>
+               </IconButton>
+            </NavLink>
             <div className="search">
                <TextField
                   variant="outlined"
@@ -33,19 +33,20 @@ const HomeNavbar = (props) => {
                <SearchIcon className="search-icon" />
             </div>
             <div className="nav-items">
+               <NavLink to="/cart">
+                  <IconButton>
+                     <Badge
+                        badgeContent={props.shoppingCart.length}
+                        color="primary"
+                     >
+                        <ShoppingCartIcon className="shopping-cart-icon" />
+                     </Badge>
+                  </IconButton>
+               </NavLink>
                {props.isAuthenticated ? (
-                  <React.Fragment>
-                     <IconButton>
-                        <NavLink to="/cart">
-                           <Badge badgeContent={props.shoppingCart.length} color="primary">
-                              <ShoppingCartIcon className="shopping-cart-icon" />
-                           </Badge>
-                        </NavLink>
-                     </IconButton>
-                     <NavLink to="/logout">
-                        <Button color="inherit">logout</Button>
-                     </NavLink>
-                  </React.Fragment>
+                  <NavLink to="/logout">
+                     <Button color="inherit">logout</Button>
+                  </NavLink>
                ) : (
                   <NavLink to="/auth">
                      <Button color="inherit">auth</Button>

@@ -15,8 +15,8 @@ const CartItem = (props) => {
       </div>
    );
 
-   const renderPrice = () => {
-      let str = '200';
+   const renderPrice = (price) => {
+      let str = price.toString();
       return str.slice(0, str.length - 2) + '.' + str.slice(str.length - 2);
    };
 
@@ -24,7 +24,7 @@ const CartItem = (props) => {
       <div className="course-card">
          <div onClick={() => props.clicked(props.course.id)}>
             <div>
-               <img style={{ width: '100%' }} src={props.course.picture} />
+               <img style={{ width: '100%' }} src={props.course.picture} alt="coures item"/>
             </div>
             <div className="index-card-text">
                <div className="index-card-title">{props.course.title}</div>
@@ -40,7 +40,7 @@ const CartItem = (props) => {
                      ({props.course.rating_count})
                   </span>
                </div>
-               <div className="index-card-price">${renderPrice()}</div>
+               <div className="index-card-price">${renderPrice(props.course.price)}</div>
             </div>
          </div>
          <Button

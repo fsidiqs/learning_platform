@@ -15,12 +15,11 @@ const HomeNavbar = (props) => {
    return (
       <AppBar position="static" color="default" className="navbar">
          <div className="flex-container">
-            <IconButton color="inherit" aria-label="menu">
-               <NavLink to="/">
+            <NavLink to="/">
+               <IconButton color="inherit" aria-label="menu">
                   <HomeIcon />
-               </NavLink>
-            </IconButton>
-           
+               </IconButton>
+            </NavLink>
          </div>
       </AppBar>
    );

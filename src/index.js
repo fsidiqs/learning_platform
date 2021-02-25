@@ -10,12 +10,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import authReducer from './store/reducers/auth';
 import shoppingCartReducer from './store/reducers/shoppingCart';
+import purchasedCourseReducer from './store/reducers/purchasedCourse'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
    auth: authReducer,
    shoppingCart: shoppingCartReducer,
+   purchasedCourse: purchasedCourseReducer,
 });
 
 const store = createStore(

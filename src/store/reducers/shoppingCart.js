@@ -7,7 +7,7 @@ const initialState = {
 
 const cartInit = (state) => {
    const cartItems = JSON.parse(localStorage.getItem('shopping_cart')) || [];
-   // const initCartItems = 
+   // const initCartItems =
    return { ...state, items: cartItems };
 };
 
@@ -24,6 +24,11 @@ const removeCartItem = (state, itemID) => {
    return { ...state, items: updatedItems };
 };
 
+const clearCart = (state) => {
+   localStorage.removeItem('shopping_cart');
+   return { ...state, items: [] };
+};
+
 const reducer = (state = initialState, payload) => {
    switch (payload.type) {
       case actionTypes.SHOPPING_CART_INIT:
@@ -31,7 +36,9 @@ const reducer = (state = initialState, payload) => {
       case actionTypes.ADD_SHOPPING_CART_ITEM:
          return addCartItem(state, payload.itemID);
       case actionTypes.REMOVE_SHOPPING_CART_ITEM:
-         return removeCartItem(state, payload.itemID)
+         return removeCartItem(state, payload.itemID);
+      case actionTypes.CLEAR_SHOPPING_CART_ITEM:
+         return clearCart(state);
       default:
          return state;
    }

@@ -15,8 +15,8 @@ const Course = (props) => {
       </div>
    );
 
-   const renderPrice = () => {
-      let str = '200';
+   const renderPrice = (price) => {
+      let str = price.toString();
       return str.slice(0, str.length - 2) + '.' + str.slice(str.length - 2);
    };
 
@@ -37,7 +37,7 @@ const Course = (props) => {
                   ({props.course.rating_count})
                </span>
             </div>
-            <div className="index-card-price">${renderPrice()}</div>
+            <div className="index-card-price">${renderPrice(props.course.price)}</div>
          </div>
       </div>
    );

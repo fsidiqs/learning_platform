@@ -22,6 +22,12 @@ export const removeShoppingCartItem = (itemID) => {
    };
 };
 
+export const clearShoppingCart = () => {
+   return {
+      type: actionTypes.CLEAR_SHOPPING_CART_ITEM,
+   };
+};
+
 export const shoppingCartInit = () => {
    return {
       type: actionTypes.SHOPPING_CART_INIT,
